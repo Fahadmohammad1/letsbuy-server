@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   brand: {
@@ -23,7 +23,11 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   rating: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
+
+const productModel = new mongoose.model("product", productSchema);
+
+module.exports = productModel;
