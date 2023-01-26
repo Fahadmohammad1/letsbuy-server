@@ -5,5 +5,6 @@ exports.addProduct = async (req, res, next) => {
   res.send({ success: true, message: "product added successfully" });
 };
 exports.getProduct = async (req, res, next) => {
-  res.send("hello munmun vai");
+  const products = await ProductDB.find({});
+  res.send(products);
 };
