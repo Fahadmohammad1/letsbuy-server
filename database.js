@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const database = () => {
-  const url = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.z0qvw8j.mongodb.net/test`;
+const database = async () => {
+  const url = "mongodb://127.0.0.1:27017/test";
 
-  mongoose
-    .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  await mongoose
+    .connect(url)
     .then((data) => {
-      console.log("connected");
+      console.log(data, "connected");
     })
     .catch((e) => console.log(e));
 };
