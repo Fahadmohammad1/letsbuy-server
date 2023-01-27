@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const database = async () => {
-  const url = "mongodb://127.0.0.1:27017/test";
+  const url = `mongodb+srv://letsbuyUser:${process.env.PASS}@cluster0.z0qvw8j.mongodb.net/?retryWrites=true&w=majority`;
 
   await mongoose
     .connect(url)
     .then((data) => {
-      console.log(data, "connected");
+      console.log("connected");
     })
     .catch((e) => console.log(e));
 };

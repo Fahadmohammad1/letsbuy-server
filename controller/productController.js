@@ -6,5 +6,6 @@ exports.addProduct = async (req, res, next) => {
 };
 exports.getProduct = async (req, res, next) => {
   const products = await ProductDB.find({});
+  console.log(products);
   res.send(products);
 };
