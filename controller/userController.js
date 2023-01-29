@@ -1,4 +1,4 @@
-const UserDB = require("../model/product_model");
+const UserDB = require("../model/user_model");
 
 //get
 exports.getUser = async (req, res, next) => {
@@ -9,5 +9,5 @@ exports.getUser = async (req, res, next) => {
 //post
 exports.addUser = async (req, res, next) => {
   await UserDB.create(req.body);
-  res.send({ success: true, message: "product added successfully" });
+  res.send({ success: true, message: "user added successfully" });
 };
