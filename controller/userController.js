@@ -8,6 +8,8 @@ exports.getUser = async (req, res, next) => {
 
 //post
 exports.addUser = async (req, res, next) => {
+  const email = req.body.email;
+  console.log(email);
   await UserDB.create(req.body);
   res.send({ success: true, message: "user added successfully" });
 };
