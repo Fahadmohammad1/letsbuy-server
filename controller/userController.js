@@ -9,7 +9,10 @@ exports.getUser = async (req, res, next) => {
 //post
 exports.addUser = async (req, res, next) => {
   const email = req.body.email;
-  console.log(email);
+  const availableUser = UserDB.findOne({ email: email });
+  if (availableUser) {
+    res.send({ success: false, message: "user already available" });
+  }
   await UserDB.create(req.body);
   res.send({ success: true, message: "user added successfully" });
 };
