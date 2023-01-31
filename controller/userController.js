@@ -12,11 +12,10 @@ exports.addUser = async (req, res, next) => {
   const email = req.body.email;
   console.log(email);
   const availableUser = await UserDB.findOne({ email: email });
-  if (!availableUser) {
-    const user = await UserDB.create(req.body);
-
-    sendToken(user, 200, res);
+  if (availableUser) {
+    sendToken(availableUser, 200, res);
   } else {
-    res.send({ success: false, message: "user already available" });
+    const user = await UserDB.create(req.body);
+    sendToken(user, 200, res);
   }
 };
