@@ -1,4 +1,5 @@
 const UserDB = require("../model/user_model");
+const sendToken = require("../utilities/sendToken");
 
 //get
 exports.getUser = async (req, res, next) => {
@@ -9,10 +10,13 @@ exports.getUser = async (req, res, next) => {
 //post
 exports.addUser = async (req, res, next) => {
   const email = req.body.email;
-  const availableUser = UserDB.findOne({ email: email });
-  if (availableUser) {
+  console.log(email);
+  const availableUser = await UserDB.findOne({ email: email });
+  if (!availableUser) {
+    const user = await UserDB.create(req.body);
+
+    sendToken(user, 200, res);
+  } else {
     res.send({ success: false, message: "user already available" });
   }
-  await UserDB.create(req.body);
-  res.send({ success: true, message: "user added successfully" });
 };
