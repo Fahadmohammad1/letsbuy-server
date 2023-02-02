@@ -4,6 +4,6 @@ const verifyToken = require("../utilities/verifyToken");
 const router = express.Router();
 
 router.post("/product", addProduct);
-router.get("/products", verifyToken, getProduct);
+router.get("/products", getProduct);
 
 module.exports = router;
