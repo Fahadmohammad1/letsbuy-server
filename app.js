@@ -14,4 +14,8 @@ app.use("/product/v1", productRouter);
 const userRouter = require("./router/userRouter");
 app.use("/user/v1", userRouter);
 
+// cart router
+const cartRouter = require("./router/cartRouter");
+app.use("/v1", cartRouter);
+
 module.exports = app;
