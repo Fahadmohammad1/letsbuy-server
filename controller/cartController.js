@@ -2,6 +2,6 @@ const cartDB = require("../model/cart_model");
 
 // post request functions
 exports.addCartToDb = async (req, res, next) => {
-  const data = await cartDB.create(req.body);
-  return res.send({ data: data, success: true });
+  await cartDB.create(req.body);
+  res.send({ success: true, message: "product added to Cart" });
 };
