@@ -7,14 +7,13 @@ exports.addCartToDb = async (req, res, next) => {
   console.log(id);
   const availableItem = await cartDB.findOne({ _id: ObjectID(id) });
   if (availableItem) {
-    await cartDB.update({ _id: id }, { $set: { quantity: quantity + 1 } });
-    return res.send({ success: true, message: "quantity increased" });
+    await cartDB.updateOne(
+      { _id: id },
+      { $set: { quantity: availableItem.quantity + 1 } }
+    );
+    return res.send({ success: false, message: "quantity increased" });
   }
-  const data = await cartDB.update(
-    { _id: id },
-    { $set: { quantity: 1 } },
-    { new: true }
-  );
+  const data = await cartDB.create({ ...req.body, quantity: 1 });
   res.send({ success: true, data: data, message: "product added to Cart" });
 };
 

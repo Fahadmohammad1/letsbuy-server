@@ -25,6 +25,9 @@ const cartSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
+  quantity: {
+    type: Number,
+  },
 });
 
 const cartModel = new mongoose.model("cart", cartSchema);
