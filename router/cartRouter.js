@@ -3,6 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/cart-item/:email", getCart);
-router.post("/cart-item/:email", addCartToDb);
+router.post("/cart-item", addCartToDb);
 
 module.exports = router;

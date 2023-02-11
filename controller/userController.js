@@ -1,7 +1,6 @@
 const UserDB = require("../model/user_model");
 const sendToken = require("../utilities/sendToken");
 const mongoose = require("mongoose");
-const { ObjectId } = require("mongodb");
 
 //get
 exports.getUser = async (req, res, next) => {
