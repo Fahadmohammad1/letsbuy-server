@@ -4,6 +4,9 @@ const cartSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  email: {
+    type: String,
+  },
   brand: {
     type: String,
   },
