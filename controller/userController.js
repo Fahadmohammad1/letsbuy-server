@@ -11,7 +11,7 @@ exports.getUser = async (req, res, next) => {
 //post
 exports.addUser = async (req, res, next) => {
   const email = req.body.email;
-  console.log(email);
+
   const availableUser = await UserDB.findOne({ email: email });
   if (availableUser) {
     sendToken(availableUser, 200, res);
