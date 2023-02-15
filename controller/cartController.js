@@ -4,24 +4,14 @@ const cartDB = require("../model/cart_model");
 exports.addCartToDb = async (req, res, next) => {
   const id = req.body._id;
   const email = req.params.email;
-  const emailFilter = await cartDB.findOne({ email: email });
-  console.log(emailFilter);
+  const filter = { email: email, _id: id };
+  const availableItem = await cartDB.findOne(filter);
+  console.log(availableItem);
+  if (availableItem) {
+    const update = { quantity: availableItem.quantity + 1 };
+    const options = { upsert: true };
 
-  if (!emailFilter) {
-    const availableItem = await cartDB.findById(id);
-    if (availableItem) {
-      // await cartDB.updateOne(
-      //   { _id: id },
-      //   { $set: { quantity: availableItem.quantity + 1 } }
-      // );
-      // return res.send({ success: false, message: "quantity increased" });
-      availableItem.quantity = availableItem.quantity + 1;
-      await availableItem.save();
-      return res.send({ success: false, message: "quantity increased" });
-    }
-  } else {
-    const data = await cartDB.create({ ...req.body, quantity: 1 });
-    res.send({ success: true, data: data, message: "product added to Cart" });
+    await cartDB.updateOne(filter, update, options);
   }
 };
 
