@@ -1,11 +1,13 @@
-const { default: mongoose } = require("mongoose");
 const cartDB = require("../model/cart_model");
 
 // post request functions
 exports.addCartToDb = async (req, res, next) => {
   const id = req.body._id;
-  const email = req.params.email;
-  const filter = { email: email, _id: id };
+  const { name, brand, image, description, email, category, price, rating } =
+    req.body;
+
+  const requesterEmail = req.params.email;
+  const filter = { email: requesterEmail, productId: id };
   const availableItem = await cartDB.findOne(filter);
 
   if (availableItem) {
@@ -15,13 +17,19 @@ exports.addCartToDb = async (req, res, next) => {
     return res.send({ success: false, message: "quantity increased" });
   }
 
-  delete req.body._id;
-  await cartDB.create({
-    _id: new mongoose.Types.ObjectId(),
-    ...req.body,
+  const data = await cartDB.create({
+    name,
+    brand,
+    image,
+    description,
+    email,
+    category,
+    price,
+    rating,
+    productId: id,
     quantity: 1,
   });
-  res.send({ success: true, message: "Item added to cart" });
+  res.send({ success: true, data: data, message: "Item added to cart" });
 };
 
 // get request function
