@@ -1,5 +1,12 @@
 const cartDB = require("../model/cart_model");
 
+// get request function
+exports.getCart = async (req, res, next) => {
+  const email = req.params.email;
+  const items = await cartDB.find({ email: email });
+  res.send(items);
+};
+
 // post request functions
 exports.addCartToDb = async (req, res, next) => {
   const id = req.body._id;
@@ -32,9 +39,6 @@ exports.addCartToDb = async (req, res, next) => {
   res.send({ success: true, data: data, message: "Item added to cart" });
 };
 
-// get request function
-exports.getCart = async (req, res, next) => {
-  const email = req.params.email;
-  const items = await cartDB.find({ email: email });
-  res.send(items);
+exports.deleteCart = async (req, res, next) => {
+  const id = req.params.id;
 };
