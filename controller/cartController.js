@@ -40,5 +40,18 @@ exports.addCartToDb = async (req, res, next) => {
 };
 
 exports.deleteCart = async (req, res, next) => {
-  const id = req.params.id;
+  const id = req.body.productId;
+  const requesterEmail = req.params.email;
+  const filter = { email: requesterEmail, productId: id };
+  const availableItem = await cartDB.findOne(filter);
+
+  if (availableItem) {
+    const update = { quantity: availableItem.quantity - 1 };
+    const data = await cartDB.updateOne(filter, update);
+    return res.send({
+      success: false,
+      message: "quantity Decreased",
+      data: data,
+    });
+  }
 };
