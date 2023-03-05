@@ -15,8 +15,8 @@ exports.addCartToDb = async (req, res, next) => {
 
   const requesterEmail = req.params.email;
   const filter = { email: requesterEmail, productId: id };
+  console.log(filter);
   const availableItem = await cartDB.findOne(filter);
-
   if (availableItem) {
     const options = { upsert: true };
     const update = { quantity: availableItem.quantity + 1 };
@@ -25,6 +25,7 @@ exports.addCartToDb = async (req, res, next) => {
   }
 
   const data = await cartDB.create({
+    productId: id,
     name,
     brand,
     image,
@@ -33,25 +34,32 @@ exports.addCartToDb = async (req, res, next) => {
     category,
     price,
     rating,
-    productId: id,
     quantity: 1,
   });
   res.send({ success: true, data: data, message: "Item added to cart" });
 };
 
 exports.deleteCart = async (req, res, next) => {
-  const id = req.body.productId;
-  const requesterEmail = req.params.email;
-  const filter = { email: requesterEmail, productId: id };
-  const availableItem = await cartDB.findOne(filter);
+  // const id = req.body.productId;
+  // const requesterEmail = req.params.email;
+  // const filter = { email: requesterEmail, productId: id };
+  // const availableItem = await cartDB.findOne(filter);
 
-  if (availableItem) {
-    const update = { quantity: availableItem.quantity - 1 };
-    const data = await cartDB.updateOne(filter, update);
-    return res.send({
-      success: false,
-      message: "quantity Decreased",
-      data: data,
-    });
-  }
+  // if (availableItem > 1) {
+  //   const update = { quantity: availableItem.quantity - 1 };
+  //   const data = await cartDB.updateOne(filter, update);
+  //   return res.send({
+  //     success: false,
+  //     message: "quantity Decreased",
+  //     data: data,
+  //   });
+  // }
+  // cartDB.deleteOne({ id, requesterEmail }, function (err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log("Result :", result);
+  //   }
+  // });
+  console.log("iam inside");
 };
