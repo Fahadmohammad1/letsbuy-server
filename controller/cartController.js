@@ -43,10 +43,9 @@ exports.addCartToDb = async (req, res, next) => {
 
 exports.deleteCart = async (req, res, next) => {
   const id = req.body.productId;
-  const { email } = req.params;
-  const filter = { email: email, productId: id };
+  const { userEmail } = req.query;
+  const filter = { email: userEmail, productId: id };
   const availableItem = await cartDB.findOne(filter);
-  // console.log(availableItem);
 
   if (availableItem.quantity > 1) {
     const update = { quantity: availableItem.quantity - 1 };
@@ -57,7 +56,7 @@ exports.deleteCart = async (req, res, next) => {
       data: data,
     });
   }
-  cartDB.deleteOne({ productId: id, email: email }, function (err, result) {
+  cartDB.deleteOne({ productId: id, email: userEmail }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
