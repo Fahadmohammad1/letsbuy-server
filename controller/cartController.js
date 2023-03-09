@@ -11,14 +11,14 @@ exports.getCart = async (req, res, next) => {
 // post request functions
 exports.addCartToDb = async (req, res, next) => {
   const id = req.body._id;
-  const { name, brand, image, description, emails, category, price, rating } =
+  const { name, brand, image, description, email, category, price, rating } =
     req.body;
 
-  const { email } = req.params;
-  const filter = { email: email, productId: id };
+  const { userEmail } = req.query;
+  const filter = { email: userEmail, productId: id };
 
   const availableItem = await cartDB.findOne(filter);
-  console.log(availableItem);
+
   if (availableItem) {
     const options = { upsert: true };
     const update = { quantity: availableItem.quantity + 1 };
@@ -32,7 +32,7 @@ exports.addCartToDb = async (req, res, next) => {
     brand,
     image,
     description,
-    email: emails,
+    email,
     category,
     price,
     rating,
@@ -45,8 +45,8 @@ exports.deleteCart = async (req, res, next) => {
   const id = req.body.productId;
   const { email } = req.params;
   const filter = { email: email, productId: id };
-  console.log(filter);
   const availableItem = await cartDB.findOne(filter);
+  // console.log(availableItem);
 
   if (availableItem.quantity > 1) {
     const update = { quantity: availableItem.quantity - 1 };
