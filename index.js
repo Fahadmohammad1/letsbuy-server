@@ -1,14 +1,14 @@
 const port = process.env.PORT || 5000;
-const database = require("./database");
-const app = require("./app");
+import database from "./database";
+import { get, listen } from "./app";
 require("dotenv").config();
 
 database();
 
-app.get("/", (req, res, next) => {
+get("/", (req, res, next) => {
   res.send("hello");
 });
 
-app.listen(port, () => {
+listen(port, () => {
   console.log("listening to ", port);
 });
